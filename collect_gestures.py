@@ -24,6 +24,7 @@ while True:
                 cv2.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 0), 2)
 
     cv2.imshow('Data Collection', frame)
+    #print(type(frame))
 
     key = cv2.waitKey(1) & 0xFF
     if key == ord('c'):  # Capture frame
@@ -32,7 +33,9 @@ while True:
         
         # Let user draw bounding box
         bbox = cv2.selectROI("Draw Bounding Box", frame, fromCenter=False, showCrosshair=True)
+        print(type(bbox))
         cv2.destroyWindow("Draw Bounding Box")
+        print(bbox)
         
         # Save annotation
         annotations[frame_name] = {

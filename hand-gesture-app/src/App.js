@@ -1,19 +1,11 @@
 import React from 'react';
 import HandGestureRecognition from './HandGestureRecognition';
-import './App.css'; // Assuming you have some basic styles
+import './App.css';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <h1>Hand Gesture Recognition</h1>
-      </header>
-      <main>
-        <HandGestureRecognition />
-      </main>
-      <footer>
-        <p>Powered by TensorFlow.js and React</p>
-      </footer>
+    <div className="App" style={{ width: '100vw', height: '100vh', overflow: 'hidden' }}>
+      <HandGestureRecognition />
     </div>
   );
 }
