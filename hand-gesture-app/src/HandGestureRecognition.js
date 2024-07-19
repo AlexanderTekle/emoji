@@ -7,13 +7,15 @@ const HandGestureRecognition = () => {
   const [prediction, setPrediction] = useState(null);
   const canvasRef = useRef(null);
   const videoRef = useRef(null);
+  const [probs, setProbs] = useState(null)
 
   const classLabels = ['Thumbs Up', 'Open palm', 'Closed fist', 'Peace sign', 'Pointing finger'];
 
   useEffect(() => {
     const loadModel = async () => {
       try {
-        const loadedModel = await tf.loadGraphModel(process.env.PUBLIC_URL + '/tensorflow2/model.json');
+        console.log("hee")
+        const loadedModel = await tf.loadGraphModel(process.env.PUBLIC_URL + '/tensorflow290/model.json');
         setModel(loadedModel);
       } catch (error) {
         console.error('Failed to load model:', error);
@@ -56,6 +58,7 @@ const HandGestureRecognition = () => {
         tensor.dispose();
         Array.isArray(result) ? result.forEach(t => t.dispose()) : result.dispose();
       } catch (error) {
+        console.log("here")
         console.error('Prediction failed:', error);
       }
     }
@@ -65,7 +68,9 @@ const HandGestureRecognition = () => {
     const [classTensor, bboxTensor] = result;
     
     const classProbs = classTensor.dataSync();
+    setProbs(classProbs)
     const maxProb = Math.max(...classProbs);
+    console.log(classProbs)
     if (maxProb > 0.7) {
       const classIndex = classProbs.indexOf(maxProb);
       const label = classLabels[classIndex];
@@ -139,6 +144,7 @@ const HandGestureRecognition = () => {
         }}>
           <p>Gesture: {prediction.label}</p>
           <p>Bounding Box: {JSON.stringify(prediction.bbox)}</p>
+          <p>{probs[0]}, {probs[1]}, {probs[2]}, {probs[3]}, {probs[4]}</p>
         </div>
       )}
     </div>
